@@ -9,3 +9,7 @@ http://www.deegree.org
 Developer-related information (e.g. "How to build deegree webservices?") can be found on the deegree3 project wiki on GiHub:
 
 https://github.com/deegree/deegree3/wiki
+
+# Continuous Integration
+We are using the travis bot to verify each pull request. The current status for the master branch is:
+[![Build Status](https://travis-ci.org/tfr42/deegree3.png?branch=master)](https://travis-ci.org/tfr42/deegree3)
