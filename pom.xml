@@ -1193,12 +1193,6 @@
         </plugins>
       </build>
     </profile>
-    <profile>
-      <id>site-all-reports</id>
-      <reporting>
-
-      </reporting>
-    </profile>
   </profiles>
 
   <licenses>
