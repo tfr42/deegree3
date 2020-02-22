@@ -31,9 +31,8 @@ Tomcatfootnote:[Requires an installation of Docker Community or
 Enterprise Edition, download Docker from
 https://www.docker.com/[www.docker.com].]
 * _WAR_: Generic Java Web Archive for deployment in an existing Java
-Servlet containerfootnote:[A Java Servlet 2.5 compliant container is
-required. We recommend using the latest http://tomcat.apache.org/[Apache
-Tomcat 8] release.]
+Servlet containerfootnote:[A Java Servlet 3.0 compliant container is
+required. We recommend using the latest http://tomcat.apache.org/[Apache Tomcat 8] release.]
 * _ZIP_: Distribution bundle with Apache Tomcatfootnote:[As of deegree
 3.4.0 the ZIP distribution bundle is deprecated and the download links
 are removed from the website. Download the ZIP from the
@@ -136,10 +135,7 @@ console and REST API.
 WARNING: The deegree console provides access to the server file system. Therefore
 you must not operate the Java Servlet container as root user!
 Furthermore you should consider to enable the Java Security Manager and
-define restrictive file permissions.footnote:[How to run securely Java
-applications we recommend to follow the
-https://docs.oracle.com/javase/8/docs/technotes/guides/security/index.html[Java
-Security Guidelines] and for
-http://tomcat.apache.org/tomcat-8.5-doc/security-manager-howto.html[Apache
-
-Tomcat the Security Manager HowTo].]
+define restrictive file permissions.
+footnote:[How to run securely Java applications we recommend to follow the
+https://docs.oracle.com/javase/8/docs/technotes/guides/security/index.html[Java Security Guidelines]
+and for http://tomcat.apache.org/tomcat-8.5-doc/security-manager-howto.html[Apache Tomcat the Security Manager HowTo].]

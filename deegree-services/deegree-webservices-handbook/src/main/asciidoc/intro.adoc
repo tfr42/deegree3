@@ -3,7 +3,7 @@
 deegree webservices are implementations of the geospatial webservice
 specifications of the http://www.opengeospatial.org[Open Geospatial
 Consortium (OGC)] and the http://inspire.jrc.ec.europa.eu[INSPIRE
-Network Services]. deegree webservices 3.2 includes the following
+Network Services]. deegree webservices 3.4 includes the following
 services:
 
 * http://www.opengeospatial.org/standards/wfs[Web Feature Service
@@ -30,7 +30,7 @@ http://www.opengeospatial.org/standards/wfs[OGC Web Feature Service
 specification]. Notable features:
 
 * Official OGC reference implementation for WFS 1.1.0 and WFS 2.0.0
-Simple
+Simple conformance class
 * Implements WFS standards 1.0.0, 1.1.0 and 2.0.0footnote:[Passes OGC
 WFS CITE test suites (including all optional tests)]
 * Fully transactional (even for rich data models)
@@ -154,7 +154,7 @@ complex (binary and xml)
 * Supports asynchronous execution (with polling of process status)
 
 TIP: In order to learn the setup and configuration of a deegree-based WPS, we
-recommend to read<<anchor-installation>> and <<anchor-lightly>> first.
+recommend to read <<anchor-installation>> and <<anchor-lightly>> first.
 Check out <<anchor-workspace-wps>> for an example deegree WPS
 configuration. Continue with <<anchor-configuration-basics>> and
 <<anchor-configuration-wps>>.
