@@ -1127,7 +1127,7 @@ expressions*
     <Column name="fid" />
   </FIDMapping>
 
-  <Complex path="ad:inspireId">https://xxx[]
+  <Complex path="ad:inspireId">
     <Complex path="base:Identifier">
       <Primitive path="base:localId" mapping="localid" />
       <Primitive path="base:namespace" mapping="'NL.KAD.BAG'" />
