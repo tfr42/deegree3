@@ -1,7 +1,7 @@
 [[anchor-logging-configuration]]
 === Logging configuration
 
-The deegree webservices do use the https://logging.apache.org/log4j/2.x[Apache Log4j 2 framework] for logging. The configuration of the logging submodule can be stored in XML, YAML, JSON, or properties format.
+For logging deegree webservices uses the https://logging.apache.org/log4j/2.x[Apache Log4j 2 framework] as the default logging implementation. The configuration of Log4j can be stored in XML, YAML, JSON, or properties format.
 The web application contains a default configuration file _/WEB-INF/classes/log4j2.properties_ with two appenders, one logging to the console Stdout (`System.out`) and the other writes the log messages into a file _logs/deegree.log_.
 
 The configuration in a nutshell:
@@ -11,15 +11,16 @@ The console appender is configured with:
 [source,properties]
 ----
 appender.console.type = Console <1>
-appender.console.name = STDOUT
+appender.console.name = STDOUT <2>
 appender.console.layout.type = PatternLayout
-appender.console.layout.pattern = %d %p %C{1.} [%t] %m%n <2>
+appender.console.layout.pattern = %d %p %C{1.} [%t] %m%n <3>
 appender.console.filter.threshold.type = ThresholdFilter
-appender.console.filter.threshold.level = info <3>
+appender.console.filter.threshold.level = info <4>
 ----
 <1> defines the type of the appender
-<2> defines the pattern for formatting the log message
-<3> defines the threshold for this appender
+<2> defines the output channel `STDOUT`
+<3> defines the pattern for formatting the log message
+<4> defines the threshold for this appender on level `info`
 
 The file appender is configured with:
 
@@ -50,23 +51,57 @@ The log file name is defined by the following settings:
 
 [source,properties]
 ----
-property.filename = deegree.log
-property.logpath = ${sys:log.dir:-logs} <1>
+property.filename = deegree.log <1>
+property.logpath = ${sys:log.dir:-./logs} <2>
 ----
-<1> defines the log directory, default is _logs/_ and can be defined by an environment variable `log.dir`
+<1> defines the property `filename` with the value `deegree.log`
+<2> defines the property `logpath` with the log directory, defaults to _logs/_ if the system property `log.dir` is not defined.
 
-To turn off or on a specific logger use the logger definition as in the following example for `org.deegree`:
+Every configuration must have a root logger. If one is not configured the default `rootLogger` config, which has a level of `ERROR` and has a Console appender attached, will be used.
 
 [source,properties]
 ----
-logger.org.deegree.name = org.deegree <1>
-logger.org.deegree.level = info <2>
-logger.org.deegree.additivity = false
-logger.org.deegree.appenderRef.rolling.ref = RollingFile <3>
-logger.org.deegree.appenderRef.stdout.ref = STDOUT <3>
+rootLogger.level = info
+rootLogger.appenderRefs = console,rolling
+rootLogger.appenderRef.console.ref = STDOUT
+rootLogger.appenderRef.rolling.ref = RollingFile
 ----
-<1> defines the logger name, here all logger with names starting with `org.deegree` are affected
+
+To turn off or on a specific logger use the logger definition as in the following example for the logger names starting with `org.deegree`:
+
+[source,properties]
+----
+logger.deegree.name = org.deegree <1>
+logger.deegree.level = info <2>
+logger.deegree.additivity = false
+logger.deegree.appenderRef.rolling.ref = RollingFile <3>
+logger.deegree.appenderRef.stdout.ref = STDOUT <3>
+----
+<1> defines the logger name, here all logger with names starting with `org.deegree` are affected, note that the key on the left can have a different identifier but must uniquely identify all the attributes and must not contain a `.`!
 <2> defines the threshold for this logger
 <3> defines the appender used by this logger
 
 You will find more information about Apache Log4j configuration in the https://logging.apache.org/log4j/2.x/manual/[Log4j 2 manual].
+
+==== Use external log configuration
+
+To use a different configuration you can specify the path the Log4j2 configuration file with the system property `log4j2.configurationFile`. When using Apache Tomcat the best place is to use the environment variable `CATALINA_OPTS`.
+
+----
+CATALINA_OPTS=-Dlog4j2.configurationFile=file:///path/to/log4j.properties
+----
+
+==== Use Logback instead of Log4j2
+
+If you want to switch to Logback as the logging provider, you can achieve this by placing the Logback libraries into the classpath, e.g. in `WEB-INF/lib` directory of the deegree webservices webapp.
+The required files are `logback-classic.jar` and `logback-core.jar`. You can download these files from the https://logback.qos.ch/download.html[Logback website] or the https://repo.deegree.org/[deegree repository].
+Also remove the Log4j2 libraries from the classpath, which must include `log4j-api.jar`, `log4j-core.jar`, `log4j-slf4j-impl.jar`, and `log4j-web.jar`.
+
+Or just https://github.com/deegree/deegree3/wiki/Building-deegree3[build deegree] with the Apache Maven profile `logback` activated, e.g.:
+[source,bash]
+----
+mvn -Plogback install
+----
+
+A minimal Logback configuration file `logback.xml` is provided with the deegree webservices webapp in the `WEB-INF/classes/` directory.
+You will find more information about Logback in the https://logback.qos.ch/documentation.html[Logback documentation].
